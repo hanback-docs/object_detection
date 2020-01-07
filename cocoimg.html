@@ -1,0 +1,14 @@
+<script src="tf.min.js"></script>
+<script src="coco-ssd"></script>
+
+<img id="img" src="cat.jpg">
+
+<script>
+	const img = document.getElementById('img');
+
+	cocoSsd.load().then(model => {
+		model.detect(img).then(predictions => {
+			document.write(predictions[0].class);
+		});
+	});
+</script>

@@ -1,0 +1,29 @@
+<script src="tf.min.js"></script>
+<script src="coco-ssd"></script>
+
+<video id="video" autoplay playsinline width="600" height="500"></video></center>
+<h3 id="desc"></h3>
+
+<script>
+        async function model_load(){
+	const video = document.getElementById("video");
+		
+	if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+		navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+				video.srcObject = stream;
+				video.play();
+			});
+		}
+  
+	  model = await cocoSsd.load('lite_mobilenet_v2');
+ 	}
+
+	function detect(){
+		model.detect(video, 1).then(predictions => {
+                        desc.innerText=predictions[0].class+" ("+predictions[0].score+")";
+                });
+	}
+
+	model_load();
+	setInterval(detect,1000);
+</script>

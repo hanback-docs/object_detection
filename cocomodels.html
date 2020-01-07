@@ -1,0 +1,28 @@
+<script src="tf.min.js"></script>
+<script src="coco-ssd"></script>
+
+<img id="img" src="cat.jpg">
+<h3 id="desc"></h3>
+
+<script>
+	const img = document.getElementById('img');
+	const desc = document.getElementById('desc');
+
+	cocoSsd.load('mobilenet_v1').then(model => {
+		model.detect(img).then(predictions => {
+			desc.innerText+="\n mobilenet v1 [ name : "+predictions[0].class+", score : "+predictions[0].score+" ]";
+		});
+	});
+
+        cocoSsd.load('mobilenet_v2').then(model => {
+                model.detect(img).then(predictions => {
+                        desc.innerText+="\n mobilenet v2 [ name : "+predictions[0].class+", score : "+predictions[0].score+" ]";
+                });
+        });
+
+        cocoSsd.load('lite_mobilenet_v2').then(model => {
+                model.detect(img).then(predictions => {
+                        desc.innerText+="\n lite mobilenet v2 [ name : "+predictions[0].class+", score : "+predictions[0].score+" ]";
+                });
+        });
+</script>
